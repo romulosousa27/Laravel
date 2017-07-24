@@ -11,6 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+/*  Rota padrão 
+	Route::get('/', function () {
+    	return view('welcome');
+	});
+*/
+
+Route::resource('/painel/produtos','Painel\ProdutoController');
+
+Route::group(['namespace' => 'Site'], function(){
+
+    	Route::get('/', 'SiteController@index');
+//        Route::get('/',  function (){
+//            return view('welcome');
+//        });
+	Route::get('/contato', 'SiteController@contato');
+        Route::get('/categoria/{id}', 'SiteController@categoria');
+	Route::get('/categoria2/{id?}', 'SiteController@categoriaOp');
+        
 });
