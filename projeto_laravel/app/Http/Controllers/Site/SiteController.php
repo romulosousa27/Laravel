@@ -28,11 +28,12 @@ class SiteController extends Controller{
             $teste = 123;
             $teste2 = 245;
             $teste3 = 542;
-            return view('site.teste', compact('teste','teste2','teste3'));
+            return view('site.home.index', compact('teste','teste2','teste3'));
 	}
 	
 	public function contato(){
-            return view('site.testecontato');
+            //return view('site.testecontato');
+            return view('site.contato.index');
 	}
 	
 	public function categoria($id){
