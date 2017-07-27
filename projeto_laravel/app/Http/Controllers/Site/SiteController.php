@@ -25,10 +25,8 @@ class SiteController extends Controller{
    	}
 
 	public function index(){
-            $teste = 123;
-            $teste2 = 245;
-            $teste3 = 542;
-            return view('site.home.index', compact('teste','teste2','teste3'));
+            $dadosUM = array("var" =>'123');
+            return view('site.home.index', $dadosUM);
 	}
 	
 	public function contato(){

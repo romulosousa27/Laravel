@@ -1,5 +1,5 @@
-@extends('site.template.template1')
+@extends('site.templates.template1')
 
-@section('')
-<h1>Pagina contato</h1>
+@section('content')
+<h1>Home Page de Contato</h1>
 @endsection
