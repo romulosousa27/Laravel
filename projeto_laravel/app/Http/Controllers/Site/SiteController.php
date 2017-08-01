@@ -26,7 +26,8 @@ class SiteController extends Controller{
 
 	public function index(){
             $dadosUM = array("var" =>'123');
-            return view('site.home.index', $dadosUM);
+            //$dadosDOIS = array("valor"=> '1');
+            return view('site.home.index',$dadosUM);
 	}
 	
 	public function contato(){
