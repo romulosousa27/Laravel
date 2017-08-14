@@ -61,7 +61,7 @@ class ProdutoController extends Controller{
         }
     */
         
-        $insert = $this->product->insert([
+        $insert = $this->product->create([
             'name' => 'Nome do produto 2',
             'number' => '132421',
             'active' => FALSE,
@@ -71,6 +71,8 @@ class ProdutoController extends Controller{
         
         if($insert){
             return 'Produto inserido com sucesso';
+            //retornando com parametro
+            //return "Produto inserido com sucesso, Id: {$insert->id}";
         }
         else{
             return 'Erro ao inserir!';
