@@ -35,11 +35,17 @@ class ProdutoController extends Controller{
         //dd($request->except('_token'));
         //dd($resquest->input('nome'));
         
-        //pega todos os dados que vem do formulario
-        $dataform = $request->except('_token');
+        //PEGA TODOS OS DADOS QUE VEM DO FORMULARIO
+        $dataform = $request->all();
         
-        //faz o cadastro
-        $insert = $this->product->insert($dataform);
+        //TESTA DE O ACTIVE ESTA VAZIO
+        $dataform['active'] = (!isset($dataform['active']) )?0:1;
+        
+        //VALIDAR DADOS 
+        $this->validate($request, $this->product->rules);
+        
+        //FAZ O CADASTRO
+        $insert = $this->product->create($dataform);
 
         if ($insert) {
             return redirect()->route('produtos.index');

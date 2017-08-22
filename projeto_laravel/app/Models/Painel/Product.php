@@ -11,4 +11,11 @@ class Product extends Model{
     ];
     //protected $guarded = ['admin'];
     
+    public $rules = [
+        'name'          => 'required|min:3|max:150',
+        'number'        => 'required|numeric',
+        'category'      => 'required',
+        'description'   => 'min:3|max:1000',
+    ];
+    
 }
