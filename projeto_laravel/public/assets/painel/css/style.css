@@ -1,0 +1,29 @@
+/* 
+    Created on : 17/08/2017, 11:01:44
+    Author     : romulo
+*/
+.title-pg{
+    font-size: 2em;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+.edit{
+    background: #241061;
+}
+.delete{
+    background: #d01919;
+}
+.actions{
+    padding: 6px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+    margin: 0px 2px;
+}
+.actions:hover{
+    text-decoration: none;
+    color: #FFF;
+}
+.btn-add{
+    margin-bottom: 10px;
+}

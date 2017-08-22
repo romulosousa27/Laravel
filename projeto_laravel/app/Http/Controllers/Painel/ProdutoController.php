@@ -15,15 +15,39 @@ class ProdutoController extends Controller{
     }
     
     public function index(){
+        
+        $title = 'Listagem dos produtos';
+        
         $products = $this->product->all();
-        return view('painel.products.index', compact('products'));
+        return view('painel.produtos.index', compact('products','title'));
     }
     
     public function create(){
         
+        $title = 'Cadastrar Novo Produto';
+        $categorys = ['eletronica','moveis','limpeza'];
+        return view('painel.produtos.create',  compact('title','categorys'));
     }
 
     public function store(Request $request){
+        //dd($request->all());
+        //dd($request->only(['nome','number']));
+        //dd($request->except('_token'));
+        //dd($resquest->input('nome'));
+        
+        //pega todos os dados que vem do formulario
+        $dataform = $request->except('_token');
+        
+        //faz o cadastro
+        $insert = $this->product->insert($dataform);
+
+        if ($insert) {
+            return redirect()->route('produtos.index');
+        }
+        else{
+            return redirect()->route('produtos.create');
+            //return redirect()->back();
+        }
         
     }
     
@@ -60,8 +84,10 @@ class ProdutoController extends Controller{
             return 'Erro ao inserir!';
         }
     */
+      
+        //INSERINDO DADOS NO BANCO DE DADOS
         
-        $insert = $this->product->create([
+    /*    $insert = $this->product->create([
             'name' => 'Nome do produto 2',
             'number' => '132421',
             'active' => FALSE,
@@ -77,6 +103,63 @@ class ProdutoController extends Controller{
         else{
             return 'Erro ao inserir!';
         }
+     */   
+        
+        //UPDATE DO BANCO DE DADOS
+    /*    
+        $prod = $this->product->find(5);
+        //dd($prod);
+        $prod->name = 'Update';
+        $prod->number = 12341;
+        $prod->active = true;
+        $prod->category = 'eletronica';
+        $prod->description = 'Desc Update';
+        $update = $prod->save();
+        
+        if($update){
+            return 'Alterado com sucesso';
+        }
+        else{
+            return 'Falha ao alterar!';
+        }
+     *
+     */
+        
+        //OUTRA FORMA DE FAZER UPDATE
+    /*    
+        $prod = $this->product->find(6);
+        $update = $prod->update([
+            'name'      => 'Update teste',
+            'number'    => '987987',
+            'active'    => TRUE,
+        ]);
+         
+        if($update){
+            return 'Alterado com sucesso';
+        }
+        else{
+            return 'Falha ao alterar!';
+        }
+     * 
+     */
+        
+        //UPDATE TERCEIRA FORMA USANDO WHERE
+    /*    
+        $update = $this->product->where('number', 132421)
+                ->update([
+                    'name'      => 'Update teste 2',
+                    'number'    => '525362',
+                    'active'    => FALSE,
+                ]);
+         
+        if($update){
+            return 'Alterado com sucesso Update!';
+        }
+        else{
+            return 'Falha ao alterar!';
+        }
+     * 
+     */
         
     }
 }
