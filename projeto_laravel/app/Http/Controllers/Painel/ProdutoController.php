@@ -11,6 +11,7 @@ class ProdutoController extends Controller{
     private $product;
     
     public function __construct(Product $product) {
+        
         $this->product = $product;
     }
     
@@ -30,19 +31,44 @@ class ProdutoController extends Controller{
     }
 
     public function store(Request $request){
+            
         //dd($request->all());
         //dd($request->only(['nome','number']));
         //dd($request->except('_token'));
         //dd($resquest->input('nome'));
         
+        
         //PEGA TODOS OS DADOS QUE VEM DO FORMULARIO
         $dataform = $request->all();
+        
         
         //TESTA DE O ACTIVE ESTA VAZIO
         $dataform['active'] = (!isset($dataform['active']) )?0:1;
         
+        
         //VALIDAR DADOS 
-        $this->validate($request, $this->product->rules);
+        //$this->validate($request, $this->product->rules);
+        
+        
+        /*OUTRA MANEIRA DE VALIDAR OS DADOS
+            usando um helper validator()
+        */
+         
+        $messages = [
+            'name.required'     => 'O campo NOME é de preechimento obrigatorio!',
+            'number.required'   => 'O campo NUMERO é de preechimento obrigatorio!',
+            'number.numeric'    => 'O campo NUMERO precisa ser apenas NUMEROS!',
+            'category.required' => 'O campo CATEGORIA é de preenchimento obrigatorio!'
+        ];
+        
+        $validate = validator($dataform, $this->product->rules, $messages);
+        if ($validate->fails()) {
+            return redirect()
+                    ->back()
+                    ->withErrors($validate)
+                    ->withInput();
+        }
+       
         
         //FAZ O CADASTRO
         $insert = $this->product->create($dataform);
