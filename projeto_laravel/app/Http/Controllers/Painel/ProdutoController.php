@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Painel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Painel\Product;
+use App\Http\Requests\Painel\ProductFormRequest;
 
 class ProdutoController extends Controller{
     
@@ -30,7 +31,7 @@ class ProdutoController extends Controller{
         return view('painel.produtos.create-edit',  compact('title','categorys'));
     }
 
-    public function store(Request $request){
+    public function store(ProductFormRequest $request){
             
         //dd($request->all());
         //dd($request->only(['nome','number']));
@@ -54,20 +55,20 @@ class ProdutoController extends Controller{
             usando um helper validator()
         */
          
-        $messages = [
-            'name.required'     => 'O campo NOME é de preechimento obrigatorio!',
-            'number.required'   => 'O campo NUMERO é de preechimento obrigatorio!',
-            'number.numeric'    => 'O campo NUMERO precisa ser apenas NUMEROS!',
-            'category.required' => 'O campo CATEGORIA é de preenchimento obrigatorio!'
-        ];
-        
-        $validate = validator($dataform, $this->product->rules, $messages);
-        if ($validate->fails()) {
-            return redirect()
-                    ->back()
-                    ->withErrors($validate)
-                    ->withInput();
-        }
+//        $messages = [
+//            'name.required'     => 'O campo NOME é de preechimento obrigatorio!',
+//            'number.required'   => 'O campo NUMERO é de preechimento obrigatorio!',
+//            'number.numeric'    => 'O campo NUMERO precisa ser apenas NUMEROS!',
+//            'category.required' => 'O campo CATEGORIA é de preenchimento obrigatorio!'
+//        ];
+//        
+//        $validate = validator($dataform, $this->product->rules, $messages);
+//        if ($validate->fails()) {
+//            return redirect()
+//                    ->back()
+//                    ->withErrors($validate)
+//                    ->withInput();
+//        }
        
         
         //FAZ O CADASTRO
@@ -97,9 +98,28 @@ class ProdutoController extends Controller{
 
     }
 
-    public function update(Request $request, $id){
+    public function update(ProductFormRequest $request, $id){
         
-        return "Editando o item: {$id}";
+        //RECUPERA TODOS OS DADOS DO FORMULARIO
+        $dataForm = $request->all();
+        
+        //RECUPERA O ITEM PARA EDITAR
+        $product = $this->product->find($id);
+        
+        //VERIFICA SE O PRODUTO ESTA ATIVADO
+        $dataform['active'] = (!isset($dataform['active']) )?0:1;
+        
+        //ALTERA OS ITENS
+        $update = $product->update($dataForm);
+        
+        //VERIFICA SE EDITOU
+        if ($update) {
+            return redirect()->route('produtos.index');
+        }
+        else{
+            return redirect()->route('produtos.edit',$id)->with(['errors' => 'Falha ao editar']);
+        }
+        
     }
 
     public function destroy($id){
