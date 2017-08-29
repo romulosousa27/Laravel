@@ -27,7 +27,7 @@ class ProdutoController extends Controller{
         
         $title = 'Cadastrar Novo Produto';
         $categorys = ['eletronica','moveis','limpeza'];
-        return view('painel.produtos.create',  compact('title','categorys'));
+        return view('painel.produtos.create-edit',  compact('title','categorys'));
     }
 
     public function store(Request $request){
@@ -89,10 +89,17 @@ class ProdutoController extends Controller{
     
     public function edit($id){
         
+        //RECUPERANDO O PRODUTO PELO ID
+        $product = $this->product->find($id);
+        $title = "Editar Produto: {$product->name}";
+        $categorys = ['eletronica','moveis','limpeza'];
+        return view('painel.produtos.create-edit',  compact('title','categorys','product'));
+
     }
 
     public function update(Request $request, $id){
         
+        return "Editando o item: {$id}";
     }
 
     public function destroy($id){

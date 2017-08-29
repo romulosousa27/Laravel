@@ -12,11 +12,16 @@
     </tr>
     
     @foreach($products as $product)
+    
     <tr>
         <td>{{$product->name}}</td>
         <td>{{$product->description}}</td>
         <td>
-            <a href="" class="actions edit"> <span class="glyphicon glyphicon-pencil"></span> </a>
+            <!-- 
+                OUTRA FORMA DE FORMA DE PASSA ROTA 
+                {{url("/painel/produtos/{$product->id}/edit")}}
+            -->
+            <a href="{{route('produtos.edit', $product->id)}}" class="actions edit"> <span class="glyphicon glyphicon-pencil"></span> </a>
             <a href="" class="actions delete"> <span class="glyphicon glyphicon-trash"></span> </a>
         </td>
     </tr>
