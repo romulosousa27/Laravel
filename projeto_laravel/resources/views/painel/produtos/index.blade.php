@@ -22,9 +22,12 @@
                 {{url("/painel/produtos/{$product->id}/edit")}}
             -->
             <a href="{{route('produtos.edit', $product->id)}}" class="actions edit"> <span class="glyphicon glyphicon-pencil"></span> </a>
-            <a href="" class="actions delete"> <span class="glyphicon glyphicon-trash"></span> </a>
+            <a href="{{route('produtos.show', $product->id)}}" class="actions delete"> <span class="Glyphicon glyphicon-eye-open"></span> </a>
         </td>
     </tr>
     @endforeach
 </table>
+
+{!! $products->links() !!}
+
 @endsection

@@ -10,6 +10,7 @@ use App\Http\Requests\Painel\ProductFormRequest;
 class ProdutoController extends Controller{
     
     private $product;
+    private $pagina_total = 5;
     
     public function __construct(Product $product) {
         
@@ -20,7 +21,7 @@ class ProdutoController extends Controller{
         
         $title = 'Listagem dos produtos';
         
-        $products = $this->product->all();
+        $products = $this->product->paginate($this->pagina_total);
         return view('painel.produtos.index', compact('products','title'));
     }
     
@@ -86,6 +87,10 @@ class ProdutoController extends Controller{
     
     public function show($id){
         
+        $product = $this->product->find($id);
+        $title = "Produto: {$product->name}";
+        
+        return view('painel.produtos.show', compact('product', 'title'));
     }
     
     public function edit($id){
@@ -124,6 +129,15 @@ class ProdutoController extends Controller{
 
     public function destroy($id){
         
+        $product = $this->product->find($id);
+        $delete = $product->delete();
+        
+        if ($delete) {
+            return redirect()->route('produtos.index'); 
+        }
+        else{
+            return redirect()->route('produtos.show', $id)->with(['errors' => 'Falhar ao Deletar']);
+        }
     }
     public function tests(){
     
